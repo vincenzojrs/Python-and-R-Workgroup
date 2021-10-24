@@ -3,3 +3,24 @@ df = pd.read_json('https://ghibliapi.herokuapp.com/films')  #associo alla variab
 df.head(0)                                                  #ne verifico la corretta importazione, visualizzandone i nomi delle colonne
 df = df.drop(columns=df.columns[[4,5,-1,-2,-3,-4,-5]])      #rimuovo le colonne che ritengo necessarie alla visualizzazioni di dati, come quelle contenti un'immagine 
 df = df.iloc[:, [1,2,3,4,5,6,7,8,9,0]]                      #riordino le colonne
+df.to_csv('dataframe.csv')                                  #esporto il dtaframe in formato csv
+
+df_people = pd. read_json('https://ghibliapi.herokuapp.com/people')       #ripeto il comando per tutte le API
+df_people = df_people.drop(columns=df_people.columns[[-1,-2,-3,-4]]) 
+df_people = df_people.iloc[:, [1,2,3,4,5,0]]
+df_people.to_csv("dataframe.csv") 
+
+df_locations = pd. read_json('https://ghibliapi.herokuapp.com/locations')
+df_locations = df_locations.drop(columns=df_locations.columns[[-1,-2,-3]]) 
+df_locations = df_locations.iloc[:, [1,2,3,4,0]]
+df_locations.to_csv("dataframe.csv") 
+
+df_species = pd. read_json('https://ghibliapi.herokuapp.com/species')
+df_species = df_species.drop(columns=df_species.columns[[-1,-2,-3]]) 
+df_species = df_species.iloc[:, [1,2,3,4,0]]
+df_species.to_csv("dataframe.csv") 
+
+df_vehicles = pd. read_json('https://ghibliapi.herokuapp.com/vehicles')
+df_vehicles = df_vehicles.drop(columns=df_vehicles.columns[[-1,-2,-3]]) 
+df_vehicles = df_vehicles.iloc[:, [1,2,3,4,0]]
+df_vehicles.to_csv("dataframe.csv") 
