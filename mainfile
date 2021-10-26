@@ -1,26 +1,33 @@
-import pandas as pd                                         #importare libreria Pandas per importare, visualizzare e editare dataframe
-df = pd.read_json('https://ghibliapi.herokuapp.com/films')  #associo alla variabile df il file json dall'url
-df.head(0)                                                  #ne verifico la corretta importazione, visualizzandone i nomi delle colonne
-df = df.drop(columns=df.columns[[4,5,-1,-2,-3,-4,-5]])      #rimuovo le colonne che ritengo necessarie alla visualizzazioni di dati, come quelle contenti un'immagine 
-df = df.iloc[:, [1,2,3,4,5,6,7,8,9,0]]                      #riordino le colonne
-df.to_csv('dataframe1.csv')                                  #esporto il dtaframe in formato csv
+  #importare libreria Pandas per importare, visualizzare e editare dataframe
+import pandas as pd                                    
 
-df_people = pd. read_json('https://ghibliapi.herokuapp.com/people')       #ripeto il comando per tutte le API
-df_people = df_people.drop(columns=df_people.columns[[-1,-2,-3,-4]]) 
+  #creo una stringa contenente tutte le api disponibili, quindi un dizionario vuoto a cui, tramite un codice for, associo la chiave corrispondente a ciascun api, con il c ontenuto json dell'api stessa
+api = ["films","people","locations", "species","vehicles"]
+d = {}
+for i in api:
+  d[i] = pd.read_json(('https://ghibliapi.herokuapp.com/'+i))
+
+  #attuo le modifiche di eliminazione colonne e riordino su ciascun dataframe
+df = pd.read_json('https://ghibliapi.herokuapp.com/films')
+df = df.drop(columns=df.columns[[4,5,-1,-2,-3,-4,-5]])
+df = df.iloc[:, [1,2,3,4,5,6,7,8,9,0]]
+
+df_people = pd. read_json('https://ghibliapi.herokuapp.com/people')
+df_people = df_people.drop(columns=df_people.columns[[-1,-2,-3,-4]])
 df_people = df_people.iloc[:, [1,2,3,4,5,0]]
-df_people.to_csv("dataframe2.csv") 
 
 df_locations = pd. read_json('https://ghibliapi.herokuapp.com/locations')
 df_locations = df_locations.drop(columns=df_locations.columns[[-1,-2,-3]]) 
 df_locations = df_locations.iloc[:, [1,2,3,4,0]]
-df_locations.to_csv("dataframe3.csv") 
 
 df_species = pd. read_json('https://ghibliapi.herokuapp.com/species')
 df_species = df_species.drop(columns=df_species.columns[[-1,-2,-3]]) 
 df_species = df_species.iloc[:, [1,2,3,4,0]]
-df_species.to_csv("dataframe4.csv") 
 
 df_vehicles = pd. read_json('https://ghibliapi.herokuapp.com/vehicles')
 df_vehicles = df_vehicles.drop(columns=df_vehicles.columns[[-1,-2,-3]]) 
 df_vehicles = df_vehicles.iloc[:, [1,2,3,4,0]]
-df_vehicles.to_csv("dataframe5.csv") 
+
+  #grazie ad un ciclo for salvo ciascun dataframe in formato .csv
+for i in d:
+  d[i].to_csv((i+"dataframe.csv"))   
