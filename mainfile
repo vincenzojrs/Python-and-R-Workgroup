@@ -1,26 +1,65 @@
-  #Import Pandas library to import, view and edit dataframes
-import pandas as pd                                    
+  #import Pandas library to import, view and edit dataframes
+  #import matplotlib and numpy to create graphs
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
 
-  #Creation of a string containing all the available API, then an empty dictionary to which, through a loop "for", I associate the key corresponding to each API, with the content json of the same API 
+  #creation of a string containing all the available API, then an empty dictionary to which, through a loop "for", I associate the key corresponding to each API, with the content json of the same API 
 api = ["films","people","locations", "species","vehicles"]
 d = {}
 for i in api:
   d[i] = pd.read_json(('https://ghibliapi.herokuapp.com/'+i))
 
-  #Delete columns not needed for data manipulation and reorder them 
+  #delete columns not needed for data manipulation and reorder them 
 d["films"] = d["films"].drop(columns=d["films"].columns[[4,5,-1,-2,-3,-4,-5]])
 d["films"] = d["films"].iloc[:, [1,2,3,4,5,6,7,8,9,0]]
 
-  #Delete columns not needed for data manipulation and reorder them, also for the second dataframe
+  #delete columns not needed for data manipulation and reorder them, also for the second dataframe
 d["people"] = d["people"].drop(columns=d["people"].columns[[-1,-2,-3,-4]])
 d["people"] = d["people"].iloc[:, [1,2,3,4,5,0]]
 
-  #Since the last 3 dataframes need the same changes, we use a "for loop" for each entry in the dictionary and if the entry is one of the last 3 in the list with the parameters associated with the different dataframes --> implements the change 
+  #since the last 3 dataframes need the same changes, we use a "for loop" for each entry in the dictionary and if the entry is one of the last 3 in the list with the parameters associated with the different dataframes --> implements the change 
 for i in d:
   if i in api[2:]:
     d[i].drop(columns=d[i].columns[[-1,-2,-3]])
     d[i] = d[i].iloc[:,[1,2,3,4,0]]
 
-  #For each dictionary entry, saves a csv file with the "dictionaryentry+dataframe.csv"
+  #for each dictionary entry, saves a csv file with the "dictionaryentry+dataframe.csv"
 for i in d:
   d[i].to_csv((i+"dataframe.csv"))   
+
+  #let's start the graphical analysis
+  #after importing matplotlib and numpy, we use gridspec to create advanced subplot
+  
+fig2 = plt.figure(1, figsize=(16,9))
+gs = gridspec.GridSpec(6,4)
+gs.update(wspace=0.5, hspace=100)
+plt.suptitle("Graphical Analysis for the \"Films\" Studio Ghibli API", size=16, y=1)
+plt.style.use("ggplot")
+
+  #barplot graph to display the number of films realized by each director. Edited yticks a rotated xticks to fit them to the data
+subplot1 = fig2.add_subplot(gs[0:2,0:4])
+d["films"]["director"].value_counts().plot(kind='bar', title='Number of films per director\n')
+plt.yticks(np.arange(1,10,2))
+plt.xticks(rotation=5)
+
+subplot2 = fig2.add_subplot(gs[2:4,0:4])
+d["films"]["producer"].value_counts().plot(kind='bar', title='Number of films per producer\n', color="#0080b0")
+plt.yticks(np.arange(1,15,3))
+plt.xticks(rotation=5)
+
+  #boxplot graph to display the median, quartiles, and outliers for running times. deleted xlabels and ticks because they're not needed
+subplot3 = fig2.add_subplot(gs[4:6,0:1])
+d["films"]["running_time"].plot(kind='box', title='Statistical distribution for running times\n', color="#0080b0")
+plt.ylabel("Minutes")
+subplot3.tick_params(labelbottom=False)
+subplot3.tick_params(bottom=False)
+
+  #scatterplot to display the relationship between the release date and the score
+subplot4 = fig2.add_subplot(gs[4:6,1:4])
+plt.title("Average films scores per year\n")
+plt.plot(d["films"]["release_date"], d["films"]["rt_score"], label="Average films scores per year")
+plt.legend()
+
+  #save the high quality grid
+plt.savefig("fig.png", dpi=300)
