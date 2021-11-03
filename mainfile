@@ -32,8 +32,8 @@ for i in d:
   #let's start the graphical analysis
   #after importing matplotlib and numpy, we use gridspec to create advanced subplot
 fig1 = plt.figure(1, figsize=(16,9))
-gs = gridspec.GridSpec(1,2)
-gs.update(wspace=0.5)
+gs1 = gridspec.GridSpec(1,2)
+gs1.update(wspace=0.5)
 
   #we start with the analysis of the gender distribution among the people 
 plt.suptitle("Graphical Analysis for the \"People\" Studio Ghibli API", size=16, y=0.9)
@@ -45,43 +45,44 @@ female = d["people"].loc[d["people"]['gender'] == 'Female']. count()[0]
 other=len(d["people"]) - male - female
 
   #another step is to build a pie chart with our gender data
-subplot1 = fig1.add_subplot(gs[0,0])
+subplot1 = fig1.add_subplot(gs1[0,0])
 labels = ['male', 'female', 'other']
 plt.pie([male,female,other], labels = labels, autopct='%.2f %%' )
 plt.title("Gender distribution among people")
 
   #we build another pie chart. this time we plot the distribution of the eye color 
-subplot2 = fig1.add_subplot(gs[0,1])
+subplot2 = fig1.add_subplot(gs1[0,1])
 d["people"].groupby('eye_color').size().plot(kind='pie', autopct='%.2f%%', title="Eye color distribution among people", pctdistance=0.8, explode=(0.2, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4))
 plt.savefig("fig2.png", dpi=300)
 
   #we create another advanced subplot with gridspec. this time we analyze the dataframe "Films" 
 fig2 = plt.figure(1, figsize=(16,9))
-gs = gridspec.GridSpec(6,4)
-gs.update(wspace=0.5, hspace=100)
+gs2 = gridspec.GridSpec(6,4)
+gs2.update(wspace=0.5, hspace=100)
 plt.suptitle("Graphical Analysis for the \"Films\" Studio Ghibli API", size=16, y=1)
 plt.style.use("ggplot")
 
   #barplot graph to display the number of films realized by each director. Edited yticks a rotated xticks to fit them to the data
-subplot3 = fig2.add_subplot(gs[0:2,0:4])
+subplot3 = fig2.add_subplot(gs2[0:2,0:4])
 d["films"]["director"].value_counts().plot(kind='bar', title='Number of films per director\n')
 plt.yticks(np.arange(1,10,2))
 plt.xticks(rotation=5)
 
-subplot4 = fig2.add_subplot(gs[2:4,0:4])
+  #barplot graph to display the number of films realized by each producer. Edited yticks a rotated xticks to fit them to the data
+subplot4 = fig2.add_subplot(gs2[2:4,0:4])
 d["films"]["producer"].value_counts().plot(kind='bar', title='Number of films per producer\n', color="#0080b0")
 plt.yticks(np.arange(1,15,3))
 plt.xticks(rotation=5)
 
   #boxplot graph to display the median, quartiles, and outliers for running times. deleted xlabels and ticks because they're not needed
-subplot5 = fig2.add_subplot(gs[4:6,0:1])
+subplot5 = fig2.add_subplot(gs2[4:6,0:1])
 d["films"]["running_time"].plot(kind='box', title='Statistical distribution for running times\n', color="#0080b0")
 plt.ylabel("Minutes")
 subplot3.tick_params(labelbottom=False)
 subplot3.tick_params(bottom=False)
 
   #scatterplot to display the relationship between the release date and the score
-subplot6 = fig2.add_subplot(gs[4:6,1:4])
+subplot6 = fig2.add_subplot(gs2[4:6,1:4])
 plt.title("Average films scores per year\n")
 plt.plot(d["films"]["release_date"], d["films"]["rt_score"], label="Average films scores per year")
 plt.legend()
