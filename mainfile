@@ -56,7 +56,7 @@ d["people"].groupby('eye_color').size().plot(kind='pie', autopct='%.2f%%', title
 plt.savefig("fig2.png", dpi=300)
 
   #we create another advanced subplot with gridspec. this time we analyze the dataframe "Films" 
-fig2 = plt.figure(1, figsize=(16,9))
+fig2 = plt.figure(2, figsize=(16,9))
 gs2 = gridspec.GridSpec(6,4)
 gs2.update(wspace=0.5, hspace=100)
 plt.suptitle("Graphical Analysis for the \"Films\" Studio Ghibli API", size=16, y=1)
@@ -90,7 +90,7 @@ plt.legend()
   #save the high quality grid
 plt.savefig("fig2.png", dpi=300)
 
-fig3 = plt.figure(1, figsize=(21,9))
+fig3 = plt.figure(3, figsize=(21,9))
 gs3 = gridspec.GridSpec(2,1)
 gs3.update(hspace=0.9)
 plt.suptitle("Graphical Analysis for the \"Locations\" Studio Ghibli API", size=16, y=1)
