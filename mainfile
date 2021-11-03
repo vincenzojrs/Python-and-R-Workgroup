@@ -88,3 +88,22 @@ plt.legend()
 
   #save the high quality grid
 plt.savefig("fig2.png", dpi=300)
+
+fig3 = plt.figure(1, figsize=(21,9))
+gs3 = gridspec.GridSpec(2,1)
+gs3.update(hspace=0.9)
+plt.suptitle("Graphical Analysis for the \"Locations\" Studio Ghibli API", size=16, y=1)
+plt.style.use("ggplot")
+
+  #plotting to display surface water in each city
+subplot7 = fig3.add_subplot(gs3[0,0])
+d["locations"].index = d["locations"]["name"]
+plt.plot(d["locations"]["surface_water"])
+plt.title("Surface Water distribution for each location\n")
+plt.xticks(rotation=45)
+
+  #plotting to display climate distribution
+subplot8 = fig3.add_subplot(gs3[1,0])
+d["locations"]["climate"].value_counts().plot(kind='bar', title='Climate distribution for each location\n', color="#0080b0")
+
+plt.savefig("fig3.png", dpi=300)
