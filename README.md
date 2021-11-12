@@ -27,4 +27,4 @@ Our purpose was to make the code simple, readable, and the leanest possible, mai
 To achieve the same result for different objects (like drawing graphs) we provided different approaches.
 
 # Code Explanation
-The complete explanation of the code is available here: [Docu](https://github.com/vincenzojrs/Python-and-R-Workgroup---Task-1-and-Task-2.1/blob/main/Documentation%20Ghibli%20Project%20Task%202.1.pdf)
+The complete explanation of the code is available here: [Documentation](https://github.com/vincenzojrs/Python-and-R-Workgroup---Task-1-and-Task-2.1/blob/main/Documentation%20Ghibli%20Project%20Task%201.pdf)
