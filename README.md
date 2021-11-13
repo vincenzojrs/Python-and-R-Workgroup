@@ -1,4 +1,4 @@
-# API_project
+# API project
 API, or Application Programming Interfaces, are the interfaces provided by servers that you can use to retrieve and send third-party data using code. \
 API: https://ghibliapi.herokuapp.com/#section/Studio-Ghibli-API
 
@@ -10,18 +10,6 @@ Studio Ghibli is a Japanese animation film studio. Their APIs provides informati
 To access each APIs we used the following link: https://ghibliapi.herokuapp.com followed by 5 endpoints, one for each API: /films, /people, /species, /vehicles and /location.
 Each APIs has different variables.
 
-## Code explanation
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pandas and numpy 
-
-```python
-pip install pandas
-pip install numpy
-```
-In order to collect data, the first thing to do is to import libraries.
-```python
-from matplotlib import pyplot as plt
-from matplotlib import gridspec
-```
 # Our purpose
 Our purpose was to make the code simple, readable, and the leanest possible, mainly using for cycles. 
 To achieve the same result for different objects (like drawing graphs) we provided different approaches.
